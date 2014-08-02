@@ -17,7 +17,8 @@ much Program
 		such x plz rand.Next;
 		wow x;
 		
-		such instance gimme MyClass many 
+		such instance gimme MyClass many 1;
+		wow fetch instance.data;
 
 ```
 
@@ -32,6 +33,7 @@ much Program
 * `fetch <member>` - retrieve a field or property
 * `so maths <expression> <operator> <expression>` - use mathematical operators
 * `wow <expression>;` - print to console
+* `amaze <expression>;` - return a value
 
 # Usage
 ## Compiling .ds files
