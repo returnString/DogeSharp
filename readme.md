@@ -6,7 +6,7 @@ D# is a programming language for Doge fans.
 many System
 
 much MyClass
-	very MyType many int x much public
+	very MyClass many int x much public
 		data so x;
 
 	such data so int much readonly
