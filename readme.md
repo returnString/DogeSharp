@@ -21,7 +21,8 @@ much Program
 
 ```
 
-# Constructs
+# Language
+## Constructs
 * `many <namespace>` - using statement for namespace
 * `much <typename> ...` - declare a type
 * `very <methodname> so <returntype> [many <argtype> <argname>] [much <modifier>]` - declare a method
@@ -31,3 +32,11 @@ much Program
 * `fetch <member>` - retrieve a field or property
 * `so maths <expression> <operator> <expression>` - use mathematical operators
 * `wow <expression>;` - print to console
+
+# Usage
+## Compiling .ds files
+Files with a ds extension are considered D# files. We use the `dsc` command-line tool (D# compiler) to convert these to either a .NET executable or DLL.
+
+`dsc.exe /target:exe /out:MyProgram.exe MyProgram.ds`
+
+`dsc` currently uses a translation step to generate .NET code, by converting .ds files into .cs files for the C# compiler behind the scenes. To see the generated files, use the /PreserveTranslated command-line option.
