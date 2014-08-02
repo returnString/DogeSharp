@@ -1,0 +1,42 @@
+﻿many System
+
+much Program
+	very Basic so void much static
+		such x 1;
+		x so 2;
+		such y "test";
+		wow x;
+		wow y;
+
+	very FunctionCalls so void much static
+		such x plz Math.Pow many 2 2;
+		wow x;
+		wow plz x.GetType;
+		such y plz Convert.ToInt32 many x;
+		wow so maths y + 1;
+
+	very Constructors so void much static
+		such rand gimme Random;
+		such z so maths plz rand.Next + plz rand.Next + 1;
+		wow z;
+
+		such instance gimme MyType many 1 2;
+		such result plz instance.Method;
+		wow result;
+
+	very Overflow so void much static
+		such max fetch int.MaxValue;
+		such overflow so maths max + 1;
+		wow overflow;
+
+	very Input so void much static
+		such input plz Console.ReadLine;
+		wow input;
+		plz Console.ReadLine;
+
+	very Main so void much static
+		plz Basic;
+		plz FunctionCalls;
+		plz Constructors;
+		plz Overflow;
+		plz Input;

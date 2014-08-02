@@ -1,0 +1,14 @@
+﻿
+much MyType
+	very MyType many int x int y much public
+		data so x;
+		moreData so y;
+
+	such data so int much readonly
+	such moreData so int much readonly much static
+
+	very Method so long much public
+		amaze so maths data + moreData;
+
+	very Helper so void much static
+		wow "helper method";
