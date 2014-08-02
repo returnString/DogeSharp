@@ -2,6 +2,8 @@
 
 D# is a programming language for Doge fans.
 
+*Huge disclaimer: I have no idea what I'm doing, and definitely shouldn't write languages.*
+
 ```
 many System
 
