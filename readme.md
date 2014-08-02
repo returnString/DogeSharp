@@ -22,8 +22,7 @@ much Program
 ```
 
 # Constructs
-* `wow <expression>;` - print to console
-* `many <namespace>;` - using statement for namespace
+* `many <namespace>` - using statement for namespace
 * `much <typename> ...` - declare a type
 * `very <methodname> so <returntype> [many <argtype> <argname>] [much <modifier>]` - declare a method
 * `very <typename> [much <modifier>]` - declare a constructor
@@ -31,3 +30,4 @@ much Program
 * `plz <method> [many <arg>]` - call a method
 * `fetch <member>` - retrieve a field or property
 * `so maths <expression> <operator> <expression>` - use mathematical operators
+* `wow <expression>;` - print to console
