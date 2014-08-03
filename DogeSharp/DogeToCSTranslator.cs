@@ -178,5 +178,10 @@ namespace DogeSharp
 		{
 			return Visit(context.Left) + '=' + Visit(context.Right);
 		}
+
+		public override string VisitHandleEvent(DogeSharpParser.HandleEventContext context)
+		{
+			return Visit(context.Left) + "+=" + Visit(context.Right);
+		}
 	}
 }

@@ -17,6 +17,7 @@ expr:
 	| '"' (~'"')* '"'												# String
 	| 'so maths' Left=expr (Operator expr)+							# Operation
 	| 'amaze' Expr=expr?											# Return
+	| Left=expr 'much handled' Right=expr							# HandleEvent
 	;
 
 declareFunction:
