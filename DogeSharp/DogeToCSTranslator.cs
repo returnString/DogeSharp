@@ -125,7 +125,7 @@ namespace DogeSharp
 
 		public override string VisitUseNamespace(DogeSharpParser.UseNamespaceContext context)
 		{
-			return "using " + context.NS.Text + ";";
+			return "using " + string.Join(".", context.Ident().Select(i => i.GetText())) + ";";
 		}
 
 		public override string VisitClassProperty(DogeSharpParser.ClassPropertyContext context)

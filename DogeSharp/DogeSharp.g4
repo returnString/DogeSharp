@@ -29,7 +29,7 @@ declareClass:
 	'much' ID=Ident (classProperty|declareFunction)*;
 
 useNamespace:
-	'many' NS=Ident;
+	'many' Ident ('.' Ident)*;
 
 Modifier:
 	'static'|'public'|'readonly';
