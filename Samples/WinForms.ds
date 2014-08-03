@@ -3,3 +3,9 @@
 much DogeForm so Form
 	very Main so void much static
 		plz Application.Run many gimme DogeForm;
+
+	very DogeForm
+		plz MessageBox.Show many "such GUI";
+
+	very OnMouseClick so void many MouseEventArgs e much protected much override
+		plz MessageBox.Show many "many click";
