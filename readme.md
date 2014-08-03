@@ -32,7 +32,6 @@ much Program
 * `very <typename> [much <modifier>]` - declare a constructor
 * `such <variablename> <expression>;` - declare and assign a local variable
 * `plz <method> [many <arg>]` - call a method
-* `fetch <member>` - retrieve a field or property
 * `so maths <expression> <operator> <expression>` - use mathematical operators
 * `wow <expression>;` - print to console
 * `amaze <expression>;` - return a value
