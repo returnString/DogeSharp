@@ -62,12 +62,6 @@
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Samples\Samples.csproj">
-      <Project>{8cd963c3-9dcd-4854-a3ea-970b94f2e488}</Project>
-      <Name>Samples</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <!-- Folder containing Antlr4BuildTasks.dll -->
