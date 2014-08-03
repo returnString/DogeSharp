@@ -105,13 +105,20 @@ namespace DogeSharp
 				var temp = new List<string>();
 				foreach (var name in names)
 				{
-					if (getArg(name) != null)
-						temp.Add(name);
+					var value = getArg(name);
+					if (value != null)
+					{
+						var full = name;
+						if (!string.IsNullOrEmpty(value))
+							full += ":" + value;
+
+						temp.Add(full);
+					}
 				}
 				return string.Join(" ", temp);
 			};
 
-			var forwardedOptions = forwardArgs("/optimize");
+			var forwardedOptions = forwardArgs("/optimize", "/target");
 
 			if (!string.IsNullOrEmpty(forwardedOptions))
 				Log("so forwarding: {0}", forwardedOptions);
