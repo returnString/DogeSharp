@@ -9,3 +9,4 @@ much DogeForm so Form
 
 	very OnMouseClick so void many MouseEventArgs e much protected much override
 		plz MessageBox.Show many "many click";
+		plz base.OnMouseClick many e;
