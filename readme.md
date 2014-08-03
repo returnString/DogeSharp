@@ -44,3 +44,16 @@ Files with a ds extension are considered D# files. We use the `dsc` command-line
 `dsc.exe /target:exe /out:MyProgram.exe MyProgram.ds`
 
 `dsc` currently uses a translation step to generate .NET code, by converting .ds files into .cs files for the C# compiler behind the scenes. To see the generated files, use the /PreserveTranslated command-line option.
+
+# Building
+## Dependencies
+* ANTLR v4 (Nuget)
+* Java v1.6+
+
+## From source
+`git clone https://github.com/returnString/DogeSharp.git`
+
+Windows: Open the solution in VS and build, or use MSBuild from cmd.
+Unix: Not tested yet, will require work for the sample build process.
+
+The build process first takes DogeSharp.csproj and outputs the `dsc` tool. Then, we invoke `dsc` for the sample projects as specified in build.bat. This way, we can test the entire process from inside VS.
