@@ -14,6 +14,8 @@ namespace DogeSharp
 {
 	public static class Program
 	{
+		private delegate string Helper(params string[] strings);
+
 		const string AsciiArt =
 @"
          ▄              ▄
@@ -48,17 +50,20 @@ namespace DogeSharp
 			Log("such language");
 
 			var parsedArgs = args.Select(a => a.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries));
-			var files = parsedArgs.Where(t => t.Length != 2).Select(f => f[0]).ToArray();
+			var files = parsedArgs.Where(t => t.Length != 2 && !t[0].StartsWith("/")).Select(f => f[0]).ToArray();
 
 			if (files.Length == 0)
 				return;
 
-			Func<string, string> getArg = name =>
+			Helper getArg = names =>
 			{
-				foreach (var option in parsedArgs.Where(t => t.Length == 2))
+				foreach (var option in parsedArgs)
 				{
-					if (option[0].ToLower() == name)
-						return option[1];
+					foreach (var name in names)
+					{
+						if (option[0].ToLower() == name)
+							return option.Length > 1 ? option[1] : string.Empty;
+					}
 				}
 				return null;
 			};
@@ -73,6 +78,7 @@ namespace DogeSharp
 			Log("very translating...");
 
 			var preserveTranslated = getArg("/preservetranslated") != null;
+			var debug = getArg("/debug") != null;
 
 			foreach (var filename in files)
 			{
@@ -94,10 +100,27 @@ namespace DogeSharp
 				}
 			}
 
-			var provider = new CSharpCodeProvider();
-			var options = new CompilerParameters(new string[0], targetName, true)
+			Helper forwardArgs = names =>
 			{
-				GenerateExecutable = targetType == "exe" || targetType == "winexe"
+				var temp = new List<string>();
+				foreach (var name in names)
+				{
+					if (getArg(name) != null)
+						temp.Add(name);
+				}
+				return string.Join(" ", temp);
+			};
+
+			var forwardedOptions = forwardArgs("/optimize");
+
+			if (!string.IsNullOrEmpty(forwardedOptions))
+				Log("so forwarding: {0}", forwardedOptions);
+
+			var provider = new CSharpCodeProvider();
+			var options = new CompilerParameters(new string[0], targetName, debug)
+			{
+				GenerateExecutable = targetType == "exe" || targetType == "winexe",
+				CompilerOptions = forwardedOptions
 			};
 
 			Log("such translated, wow");
@@ -105,7 +128,8 @@ namespace DogeSharp
 
 			var results = provider.CompileAssemblyFromSource(options, sources.ToArray());
 
-			Log("such compiled, wow: {0}", timer.Elapsed);
+			Log("such compiled, wow");
+			Log("many time, such elapsed, so milliseconds: {0}", timer.ElapsedMilliseconds);
 
 			if (results.Errors.HasErrors)
 			{
