@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Microsoft.CSharp;
 
@@ -41,6 +42,21 @@ namespace DogeSharp
 ";
 
 		public static void Main(string[] args)
+		{
+			try
+			{
+				MainAsync(args).Wait();
+			}
+			catch (AggregateException ex)
+			{
+				Log("much internal error: {0}", ex.InnerException);
+			}
+
+			if (Debugger.IsAttached)
+				Console.ReadLine();
+		}
+
+		public static async Task MainAsync(string[] args)
 		{
 			Console.WriteLine(AsciiArt);
 
@@ -82,7 +98,7 @@ namespace DogeSharp
 
 			var timer = Stopwatch.StartNew();
 			var visitor = new DogeToCSTranslator();
-			var sources = new List<string>();
+			var tasks = new List<Task<string>>();
 
 			Log("very translating...");
 
@@ -91,23 +107,32 @@ namespace DogeSharp
 
 			foreach (var filename in files)
 			{
-				using (var file = File.OpenRead(filename))
+				tasks.Add(Task.Run(async () =>
 				{
-					var input = new AntlrInputStream(file);
-					var lexer = new DogeSharpLexer(input);
-					var tokens = new CommonTokenStream(lexer);
-					var parser = new DogeSharpParser(tokens);
+					using (var file = File.OpenRead(filename))
+					{
+						var input = new AntlrInputStream(file);
+						var lexer = new DogeSharpLexer(input);
+						var tokens = new CommonTokenStream(lexer);
+						var parser = new DogeSharpParser(tokens);
 
-					Log("much translation: {0}", filename);
+						Log("much translation: {0}", filename);
 
-					var text = visitor.Visit(parser.prog());
+						var text = visitor.Visit(parser.prog());
 
-					if (preserveTranslated)
-						File.WriteAllText(filename.Replace(".ds", ".cs"), text);
+						if (preserveTranslated)
+						{
+							using (var translated = File.OpenWrite(filename.Replace(".ds", ".cs")))
+							using (var stream = new StreamWriter(translated))
+								await stream.WriteAsync(text);
+						}
 
-					sources.Add(text);
-				}
+						return text;
+					}
+				}));
 			}
+
+			var sources = await Task.WhenAll(tasks);
 
 			Helper forwardArgs = names =>
 			{
@@ -163,9 +188,6 @@ namespace DogeSharp
 			{
 				Log("many success: {0}", results.PathToAssembly);
 			}
-
-			if (Debugger.IsAttached)
-				Console.ReadLine();
 		}
 
 		private static Random m_random = new Random();
