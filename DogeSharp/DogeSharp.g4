@@ -32,7 +32,7 @@ useNamespace:
 	'many' Ident ('.' Ident)*;
 
 Modifier:
-	'static'|'public'|'readonly';
+	'static'|'public'|'readonly'|'protected'|'override'|'virtual';
 Operator:
 	'+'|'-'|'*'|'/';
 Number:
