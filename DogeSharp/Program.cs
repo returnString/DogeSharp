@@ -116,8 +116,12 @@ namespace DogeSharp
 			if (!string.IsNullOrEmpty(forwardedOptions))
 				Log("so forwarding: {0}", forwardedOptions);
 
+			var assemblies = parsedArgs.Where(t => t[0] == "/reference").Select(t => t[1]).ToArray();
+
+			Log("very references: {0}", string.Join(", ", assemblies));
+
 			var provider = new CSharpCodeProvider();
-			var options = new CompilerParameters(new string[0], targetName, debug)
+			var options = new CompilerParameters(assemblies, targetName, debug)
 			{
 				GenerateExecutable = targetType == "exe" || targetType == "winexe",
 				CompilerOptions = forwardedOptions
