@@ -26,7 +26,7 @@ classProperty:
 	'such' Name=Ident 'so' Type=Ident ('much' Modifier)*;
 
 declareClass:
-	'much' ID=Ident (classProperty|declareFunction)*;
+	'much' ID=Ident ('so' Ident)* (classProperty|declareFunction)*;
 
 useNamespace:
 	'many' Ident ('.' Ident)*;

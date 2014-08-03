@@ -68,7 +68,13 @@ namespace DogeSharp
 		{
 			var props = context.classProperty().Select(p => Visit(p));
 			var methods = context.declareFunction().Select(m => Visit(m));
-			return string.Format("class {0} {{ {1} {2} }}", context.ID.Text, string.Join(Environment.NewLine, props), string.Join(Environment.NewLine, methods));
+			var inherits = context.Ident().Skip(1).Select(i => i.ToString());
+			var inheritStr = string.Join(", ", inherits);
+			if (!string.IsNullOrEmpty(inheritStr))
+				inheritStr = ": " + inheritStr;
+
+			return string.Format("class {0} {1} {{ {2} {3} }}", context.ID.Text, inheritStr,
+				string.Join(Environment.NewLine, props), string.Join(Environment.NewLine, methods));
 		}
 
 		public override string VisitDeclareFunction(DogeSharpParser.DeclareFunctionContext context)
