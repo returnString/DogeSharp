@@ -1,12 +1,19 @@
-﻿many System.Windows.Forms
+﻿many System
+many System.Windows.Forms
 
 much DogeForm so Form
 	very Main so void much static
+		plz Application.EnableVisualStyles;
 		plz Application.Run many gimme DogeForm;
 
 	very DogeForm
-		plz MessageBox.Show many "such GUI";
+		such button gimme Button;
+		fetch button.Text so "much click";
+		fetch button.Click much handled MyClickHandler;
+		plz Controls.Add many button;
+
+	very MyClickHandler so void many object s EventArgs e
+		plz MessageBox.Show many "many click";
 
 	very OnMouseClick so void many MouseEventArgs e much protected much override
-		plz MessageBox.Show many "many click";
 		plz base.OnMouseClick many e;
