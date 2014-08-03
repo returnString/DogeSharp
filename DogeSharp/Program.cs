@@ -157,7 +157,13 @@ namespace DogeSharp
 		private static void Log(string message, params object[] args)
 		{
 			var indent = new string(' ', m_random.Next(Console.BufferWidth / 2));
-			Console.WriteLine(indent + message, args);
+			var msg = indent + message;
+
+			if (args.Length == 0)
+				Console.WriteLine(msg);
+			else
+				Console.WriteLine(msg, args);
+
 			Console.WriteLine();
 		}
 
