@@ -10,7 +10,7 @@ expr:
 	  'such' ID=Ident Expr=expr										# Declare
 	| Left=expr 'so' Right=expr										# Assign
 	| Pre=('plz'|'gimme') (Expr=expr '.')? ID=Ident ('many' expr+)?	# Call
-	| 'fetch' Target=expr '.' ID=Ident								# GetField
+	| Target=expr '.' ID=Ident										# GetField
 	| 'wow' Expr=expr												# Print
 	| Value=Ident													# Ident
 	| Value=Number													# Number

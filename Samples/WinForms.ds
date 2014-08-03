@@ -8,8 +8,8 @@ much DogeForm so Form
 
 	very DogeForm
 		such button gimme Button;
-		fetch button.Text so "much click";
-		fetch button.Click much handled MyClickHandler;
+		button.Text so "much click";
+		button.Click much handled MyClickHandler;
 		plz Controls.Add many button;
 
 	very MyClickHandler so void many object s EventArgs e

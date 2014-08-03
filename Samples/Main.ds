@@ -25,7 +25,7 @@ much Program
 		wow result;
 
 	very Overflow so void much static
-		such max fetch int.MaxValue;
+		such max int.MaxValue;
 		such overflow so maths max + 1;
 		wow overflow;
 
