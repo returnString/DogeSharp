@@ -22,6 +22,7 @@ much Program
 
 		such instance gimme MyType many 1 2;
 		such result plz instance.Method;
+		wow instance.data;
 		wow result;
 
 	very Overflow so void much static

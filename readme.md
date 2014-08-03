@@ -20,7 +20,7 @@ much Program
 		wow x;
 		
 		such instance gimme MyClass many 1;
-		wow fetch instance.data;
+		wow instance.data;
 
 ```
 
