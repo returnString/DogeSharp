@@ -44,6 +44,15 @@ namespace DogeSharp
 		{
 			Console.WriteLine(AsciiArt);
 
+			try
+			{
+				m_bufferWidth = Console.BufferWidth / 2;
+			}
+			catch (IOException)
+			{
+				m_bufferWidth = 40;
+			}
+
 			Log("many D#");
 			Log("very © Ruan Pearce-Authers");
 			Log("much programming");
@@ -160,10 +169,11 @@ namespace DogeSharp
 		}
 
 		private static Random m_random = new Random();
+		private static int m_bufferWidth;
 
 		private static void Log(string message, params object[] args)
 		{
-			var indent = new string(' ', m_random.Next(Console.BufferWidth / 2));
+			var indent = new string(' ', m_random.Next(m_bufferWidth));
 			var msg = indent + message;
 
 			if (args.Length == 0)
