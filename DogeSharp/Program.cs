@@ -100,7 +100,6 @@ namespace DogeSharp
 			var targetName = getArg("/out") ?? Path.GetFileNameWithoutExtension(files[0]) + "." + targetType;
 
 			var timer = Stopwatch.StartNew();
-			var visitor = new DogeToCSTranslator();
 			var tasks = new List<Task<string>>();
 
 			Log("very translating...");
@@ -121,6 +120,7 @@ namespace DogeSharp
 
 						Log("much translation: {0}", filename);
 
+						var visitor = new DogeToCSTranslator(filename);
 						var text = visitor.Visit(parser.prog());
 
 						if (preserveTranslated)

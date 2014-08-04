@@ -7,6 +7,13 @@ namespace DogeSharp
 	{
 		const string QuoteStr = "\"";
 
+		private readonly string m_filename;
+
+		public DogeToCSTranslator(string filename)
+		{
+			m_filename = filename;
+		}
+
 		public override string VisitCall(DogeSharpParser.CallContext context)
 		{
 			var name = context.ID.Text;
@@ -81,8 +88,8 @@ namespace DogeSharp
 		{
 			var skip = 1;
 			var name = context.ID.Text;
-			var exprs = context.stmt().SelectMany(s => s.expr()).Select(c => Visit(c)).Where(e => e != null).ToArray();
-			var statements = exprs.Select(e => e + ";" + Environment.NewLine);
+			var exprs = context.stmt().SelectMany(s => s.expr()).Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => e.Text != null).ToArray();
+			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};{0}", Environment.NewLine, e.Line, m_filename, e.Text));
 
 			var returnType = "";
 			if (context.ReturnType != null)
