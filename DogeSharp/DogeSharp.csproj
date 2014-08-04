@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,18 +31,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>../Assets/doge.ico</ApplicationIcon>
+    <ApplicationIcon>..\Assets\doge.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.Runtime.net45, Version=4.3.0.0, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Antlr4.Runtime.4.3.0\lib\net45\Antlr4.Runtime.net45.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,11 +44,32 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Antlr4.Runtime.net45">
+      <HintPath>..\packages\Antlr4.Runtime.4.3.0\lib\net45\Antlr4.Runtime.net45.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilerException.cs" />
     <Compile Include="DogeToCSTranslator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="obj\Debug\DogeSharpBaseListener.cs">
+      <Link>Generated\DogeSharpBaseListener.cs</Link>
+    </Compile>
+    <Compile Include="obj\Debug\DogeSharpBaseVisitor.cs">
+      <Link>Generated\DogeSharpBaseVisitor.cs</Link>
+    </Compile>
+    <Compile Include="obj\Debug\DogeSharpLexer.cs">
+      <Link>Generated\DogeSharpLexer.cs</Link>
+    </Compile>
+    <Compile Include="obj\Debug\DogeSharpListener.cs">
+      <Link>Generated\DogeSharpListener.cs</Link>
+    </Compile>
+    <Compile Include="obj\Debug\DogeSharpParser.cs">
+      <Link>Generated\DogeSharpParser.cs</Link>
+    </Compile>
+    <Compile Include="obj\Debug\DogeSharpVisitor.cs">
+      <Link>Generated\DogeSharpVisitor.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="DogeSharp.g4">
@@ -84,4 +100,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Generated\" />
+  </ItemGroup>
 </Project>
