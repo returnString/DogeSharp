@@ -78,7 +78,10 @@ namespace DogeSharp
 			var files = parsedArgs.Where(t => t.Length != 2 && !t[0].StartsWith("/")).Select(f => f[0]).ToArray();
 
 			if (files.Length == 0)
+			{
+				Log("very files, much unspecified");
 				return;
+			}
 
 			Helper getArg = names =>
 			{
