@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogeSharp", "DogeSharp\DogeSharp.csproj", "{CFB5A41C-EDDD-475A-86E7-F426CC705B56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "Samples\Samples.csproj", "{8CD963C3-9DCD-4854-A3EA-970B94F2E488}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CFB5A41C-EDDD-475A-86E7-F426CC705B56} = {CFB5A41C-EDDD-475A-86E7-F426CC705B56}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
