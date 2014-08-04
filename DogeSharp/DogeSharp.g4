@@ -21,16 +21,19 @@ expr:
 	;
 
 declareFunction:
-	'very' ID=Ident ('so' ReturnType=Ident)? ('many' (Ident Ident)*)? ('much' Modifier)* stmt*;
+	attribute* 'very' ID=Ident ('so' ReturnType=Ident)? ('many' (Ident Ident)*)? ('much' Modifier)* stmt*;
 
 classProperty:
-	'such' Name=Ident 'so' Type=Ident ('much' Modifier)*;
+	attribute* 'such' Name=Ident 'so' Type=Ident ('much' Modifier)*;
 
 declareClass:
-	'much' ID=Ident ('so' Ident)* (classProperty|declareFunction)*;
+	attribute* 'much' ID=Ident ('so' Ident)* (classProperty|declareFunction)*;
 
 useNamespace:
 	'many' Ident ('.' Ident)*;
+
+attribute:
+	'[' 'such' ID=Ident ('many' expr+)? ']';
 
 Modifier:
 	'static'|'public'|'readonly'|'protected'|'override'|'virtual';

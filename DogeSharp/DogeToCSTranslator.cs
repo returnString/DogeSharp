@@ -80,7 +80,9 @@ namespace DogeSharp
 			if (!string.IsNullOrEmpty(inheritStr))
 				inheritStr = ": " + inheritStr;
 
-			return string.Format("class {0} {1} {{ {2} {3} }}", context.ID.Text, inheritStr,
+			var attributes = string.Join(" ", context.attribute().Select(a => Visit(a)));
+
+			return string.Format("{0} class {1} {2} {{ {3} {4} }}", attributes, context.ID.Text, inheritStr,
 				string.Join(Environment.NewLine, props), string.Join(Environment.NewLine, methods));
 		}
 
@@ -90,6 +92,7 @@ namespace DogeSharp
 			var name = context.ID.Text;
 			var exprs = context.stmt().SelectMany(s => s.expr()).Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => e.Text != null).ToArray();
 			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};{0}", Environment.NewLine, e.Line, m_filename, e.Text));
+			var attributes = string.Join(" ", context.attribute().Select(a => Visit(a)));
 
 			var returnType = "";
 			if (context.ReturnType != null)
@@ -111,7 +114,8 @@ namespace DogeSharp
 				prmString += string.Format("{0} {1} ", idents[i], idents[i + 1]);
 			}
 
-			return string.Format("{0} {1} {2}({3}) {{ {4} }}", modifiers, returnType, name, prmString, string.Join("", statements));
+			return string.Format("{0} {1} {2} {3}({4}) {{ {5} }}",
+				attributes, modifiers, returnType, name, prmString, string.Join("", statements));
 		}
 
 		public override string VisitGetField(DogeSharpParser.GetFieldContext context)
@@ -162,7 +166,10 @@ namespace DogeSharp
 				}
 			}
 
-			return string.Format("{0} {1} {2} {{ {3} get; {4} set; }}", access, context.Type.Text, context.Name.Text, getAccess, setAccess);
+			var attributes = string.Join(" ", context.attribute().Select(a => Visit(a)));
+
+			return string.Format("{0} {1} {2} {3} {{ {4} get; {5} set; }}",
+				attributes, access, context.Type.Text, context.Name.Text, getAccess, setAccess);
 		}
 
 		public override string VisitReturn(DogeSharpParser.ReturnContext context)
@@ -189,6 +196,11 @@ namespace DogeSharp
 		public override string VisitHandleEvent(DogeSharpParser.HandleEventContext context)
 		{
 			return Visit(context.Left) + "+=" + Visit(context.Right);
+		}
+
+		public override string VisitAttribute(DogeSharpParser.AttributeContext context)
+		{
+			return string.Format("[{0}({1})]", context.ID.Text, string.Join(",", context.expr().Select(e => Visit(e))));
 		}
 	}
 }
