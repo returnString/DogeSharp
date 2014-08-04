@@ -42,6 +42,7 @@
     <None Include="build.bat" />
     <None Include="Main.ds" />
     <None Include="MyType.ds" />
+    <None Include="Server.ds" />
     <None Include="WinForms.ds" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,22 @@
+﻿many System
+many Servya
+
+[such Service]
+much DogeService
+	[such Route]
+	very WowAsAService so string much public
+		amaze "wow";
+
+much Program
+	very Main so void much static
+		such resolver gimme DependencyResolver;
+		such router gimme Router;
+		such parser gimme Parser;
+		such autoRouter gimme AutoRouter many router parser resolver;
+		plz autoRouter.Discover;
+		such listener gimme AsyncHttpListener many router 1337 0;
+		plz listener.Start many CreateLoop 1;
+		plz Console.ReadLine;
+
+	very CreateLoop so EventLoopContext much static
+		amaze gimme EventLoopContext;
