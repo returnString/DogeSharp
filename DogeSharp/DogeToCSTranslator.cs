@@ -123,8 +123,7 @@ namespace DogeSharp
 
 		public override string VisitGetField(DogeSharpParser.GetFieldContext context)
 		{
-			var target = Visit(context.Target);
-			return string.Format("{0}.{1}", target, context.ID.Text);
+			return context.ID.Text;
 		}
 
 		public override string VisitOperation(DogeSharpParser.OperationContext context)
@@ -145,7 +144,7 @@ namespace DogeSharp
 
 		public override string VisitUseNamespace(DogeSharpParser.UseNamespaceContext context)
 		{
-			return "using " + string.Join(".", context.Ident().Select(i => i.GetText())) + ";";
+			return "using " + context.ID.Text + ";";
 		}
 
 		public override string VisitClassProperty(DogeSharpParser.ClassPropertyContext context)
@@ -214,13 +213,7 @@ namespace DogeSharp
 		public override string VisitUsing(DogeSharpParser.UsingContext context)
 		{
 			var resource = Visit(context.Expr);
-			var block = string.Empty;
-
-			foreach (var entry in Group(context.stmt(), context.block()))
-			{
-				block += Visit(entry);
-			}
-
+			var block = CreateBlock(context.block(), context.stmt());
 			return string.Format("using ({0}) {{ {1} }}", resource, block);
 		}
 
@@ -229,6 +222,24 @@ namespace DogeSharp
 			var exprs = context.expr().Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => !string.IsNullOrWhiteSpace(e.Text)).ToArray();
 			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};", Environment.NewLine, e.Line, m_filename, e.Text));
 			return string.Join(" ", statements);
+		}
+
+		public override string VisitLock(DogeSharpParser.LockContext context)
+		{
+			var block = CreateBlock(context.block(), context.stmt());
+			return string.Format("lock ({0}) {{ {1} }}", context.ID.Text, block);
+		}
+
+		private string CreateBlock(params IEnumerable<ParserRuleContext>[] contexts)
+		{
+			var block = string.Empty;
+
+			foreach (var entry in Group(contexts))
+			{
+				block += Visit(entry);
+			}
+
+			return block;
 		}
 
 		private IEnumerable<ParserRuleContext> Group(params IEnumerable<ParserRuleContext>[] contexts)

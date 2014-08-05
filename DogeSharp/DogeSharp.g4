@@ -23,6 +23,7 @@ expr:
 
 block:
 	'very resource' Expr=expr '{' (stmt|block)* '}'					# Using
+	| 'many lock' ID=Ident '{' (stmt|block)* '}'			# Lock
 	;
 
 declareFunction:
@@ -35,7 +36,7 @@ declareClass:
 	attribute* 'much' ID=Ident ('so' Ident)* (classProperty|declareFunction)*;
 
 useNamespace:
-	'many' Ident ('.' Ident)*;
+	'many' ID=Ident;
 
 attribute:
 	'[' 'such' ID=Ident ('many' expr+)? ']';
@@ -47,6 +48,8 @@ Operator:
 Number:
 	[0-9]+;
 Ident:
+	IdentPart ('.' IdentPart)*;
+IdentPart:
 	IdentChar(IdentChar|Number)*;
 IdentChar:
 	[a-zA-Z]|'<'|'>';

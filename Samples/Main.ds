@@ -48,7 +48,16 @@ much Program
 			wow plz writer.ToString;
 		}
 
+	such lockObject so object much readonly much static
+
+	very WithLock so void much static
+		many lock lockObject
+		{
+			such x 1;
+		}
+
 	very Main so void much static
+		lockObject so gimme object;
 		plz Basic;
 		plz FunctionCalls;
 		plz Constructors;
