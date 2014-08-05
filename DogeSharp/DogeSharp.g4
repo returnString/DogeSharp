@@ -21,8 +21,12 @@ expr:
 	| 'to the moon' Expr=expr										# Await
 	;
 
+block:
+	'very resource' Expr=expr '{' (stmt|block)* '}'					# Using
+	;
+
 declareFunction:
-	attribute* 'very' ID=Ident ('so' ReturnType=Ident)? ('many' (Ident Ident)*)? ('much' Modifier)* stmt*;
+	attribute* 'very' ID=Ident ('so' ReturnType=Ident)? ('many' (Ident Ident)*)? ('much' Modifier)* (stmt|block)*;
 
 classProperty:
 	attribute* 'such' Name=Ident 'so' Type=Ident ('much' Modifier)*;

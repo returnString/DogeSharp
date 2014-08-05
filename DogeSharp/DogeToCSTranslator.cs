@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Antlr4.Runtime;
 
 namespace DogeSharp
 {
@@ -90,8 +92,7 @@ namespace DogeSharp
 		{
 			var skip = 1;
 			var name = context.ID.Text;
-			var exprs = context.stmt().SelectMany(s => s.expr()).Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => e.Text != null).ToArray();
-			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};{0}", Environment.NewLine, e.Line, m_filename, e.Text));
+			
 			var attributes = string.Join(" ", context.attribute().Select(a => Visit(a)));
 
 			var returnType = "";
@@ -114,8 +115,10 @@ namespace DogeSharp
 				prmString += string.Format("{0} {1} ", idents[i], idents[i + 1]);
 			}
 
+			var block = Group(context.stmt(), context.block());
+
 			return string.Format("{0} {1} {2} {3}({4}) {{ {5} }}",
-				attributes, modifiers, returnType, name, prmString, string.Join("", statements));
+				attributes, modifiers, returnType, name, prmString, string.Join("", block.Select(b => Visit(b))));
 		}
 
 		public override string VisitGetField(DogeSharpParser.GetFieldContext context)
@@ -206,6 +209,33 @@ namespace DogeSharp
 		public override string VisitAwait(DogeSharpParser.AwaitContext context)
 		{
 			return "await " + Visit(context.Expr);
+		}
+
+		public override string VisitUsing(DogeSharpParser.UsingContext context)
+		{
+			Console.WriteLine("Visiting resource block");
+			var resource = Visit(context.Expr);
+			var block = string.Empty;
+
+			foreach (var entry in Group(context.stmt(), context.block()))
+			{
+				Console.WriteLine("using statement: test");
+				block += Visit(entry);
+			}
+
+			return string.Format("using ({0}) {{ {1} }}", resource, block);
+		}
+
+		public override string VisitStmt(DogeSharpParser.StmtContext context)
+		{
+			var exprs = context.expr().Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => !string.IsNullOrWhiteSpace(e.Text)).ToArray();
+			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};{0}", Environment.NewLine, e.Line, m_filename, e.Text));
+			return string.Join(" ", statements);
+		}
+
+		private IEnumerable<ParserRuleContext> Group(params IEnumerable<ParserRuleContext>[] contexts)
+		{
+			return contexts.SelectMany(c => c).OrderBy(c => c.Start.Line);
 		}
 	}
 }
