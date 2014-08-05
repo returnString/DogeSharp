@@ -18,6 +18,7 @@ expr:
 	| 'so maths' Left=expr (Operator expr)+							# Operation
 	| 'amaze' Expr=expr?											# Return
 	| Left=expr 'much handled' Right=expr							# HandleEvent
+	| 'to the moon' Expr=expr										# Await
 	;
 
 declareFunction:
@@ -36,7 +37,7 @@ attribute:
 	'[' 'such' ID=Ident ('many' expr+)? ']';
 
 Modifier:
-	'static'|'public'|'readonly'|'protected'|'override'|'virtual';
+	'static'|'public'|'readonly'|'protected'|'override'|'virtual'|'async';
 Operator:
 	'+'|'-'|'*'|'/';
 Number:
@@ -44,6 +45,6 @@ Number:
 Ident:
 	IdentChar(IdentChar|Number)*;
 IdentChar:
-	[a-zA-Z];
+	[a-zA-Z]|'<'|'>';
 WS:
 	(' '|'\r'|'\n'|'\t') -> channel(HIDDEN);

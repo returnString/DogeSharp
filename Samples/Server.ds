@@ -1,10 +1,15 @@
 ﻿many System
+many System.Threading.Tasks
 many Servya
 
 [such Service]
 much DogeService
 	[such Route]
 	very WowAsAService so string much public
+		amaze "wow";
+
+	very SlowWow so Task<string> much public much async
+		to the moon plz Task.Delay many 1000;
 		amaze "wow";
 
 much Program

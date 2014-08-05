@@ -202,5 +202,10 @@ namespace DogeSharp
 		{
 			return string.Format("[{0}({1})]", context.ID.Text, string.Join(",", context.expr().Select(e => Visit(e))));
 		}
+
+		public override string VisitAwait(DogeSharpParser.AwaitContext context)
+		{
+			return "await " + Visit(context.Expr);
+		}
 	}
 }
