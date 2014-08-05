@@ -213,13 +213,11 @@ namespace DogeSharp
 
 		public override string VisitUsing(DogeSharpParser.UsingContext context)
 		{
-			Console.WriteLine("Visiting resource block");
 			var resource = Visit(context.Expr);
 			var block = string.Empty;
 
 			foreach (var entry in Group(context.stmt(), context.block()))
 			{
-				Console.WriteLine("using statement: test");
 				block += Visit(entry);
 			}
 
