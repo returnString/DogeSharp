@@ -229,7 +229,7 @@ namespace DogeSharp
 		public override string VisitStmt(DogeSharpParser.StmtContext context)
 		{
 			var exprs = context.expr().Select(c => new { Line = c.Start.Line, Text = Visit(c) }).Where(e => !string.IsNullOrWhiteSpace(e.Text)).ToArray();
-			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};{0}", Environment.NewLine, e.Line, m_filename, e.Text));
+			var statements = exprs.Select(e => string.Format("{0}#line {1} \"{2}\" {0} {3};", Environment.NewLine, e.Line, m_filename, e.Text));
 			return string.Join(" ", statements);
 		}
 
