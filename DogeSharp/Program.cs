@@ -109,23 +109,26 @@ namespace DogeSharp
 
 			foreach (var filename in files)
 			{
+				// Silly closure semantics
+				var actual = filename;
+
 				tasks.Add(Task.Run(async () =>
 				{
-					using (var file = File.OpenRead(filename))
+					using (var file = File.OpenRead(actual))
 					{
 						var input = new AntlrInputStream(file);
 						var lexer = new DogeSharpLexer(input);
 						var tokens = new CommonTokenStream(lexer);
 						var parser = new DogeSharpParser(tokens);
 
-						Log("much translation: {0}", filename);
+						Log("much translation: {0}", actual);
 
-						var visitor = new DogeToCSTranslator(filename);
+						var visitor = new DogeToCSTranslator(actual);
 						var text = visitor.Visit(parser.prog());
 
 						if (preserveTranslated)
 						{
-							using (var translated = File.OpenWrite(filename.Replace(".ds", ".cs")))
+							using (var translated = File.Open(actual.Replace(".ds", ".cs"), FileMode.Create))
 							using (var stream = new StreamWriter(translated))
 								await stream.WriteAsync(text);
 						}
