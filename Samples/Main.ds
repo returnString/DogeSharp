@@ -1,4 +1,5 @@
 ﻿many System
+many System.Threading.Tasks
 
 much Program
 	very Basic so void much static
@@ -35,9 +36,15 @@ much Program
 		wow input;
 		plz Console.ReadLine;
 
+	very AsyncFunction so Task much static much async
+		to the moon plz Task.Delay many 1000;
+		wow "many delay";
+
 	very Main so void much static
 		plz Basic;
 		plz FunctionCalls;
 		plz Constructors;
 		plz Overflow;
 		plz Input;
+		such task plz AsyncFunction;
+		plz task.Wait;
