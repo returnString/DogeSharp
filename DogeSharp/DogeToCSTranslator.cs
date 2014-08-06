@@ -115,10 +115,10 @@ namespace DogeSharp
 				prmString += string.Format("{0} {1} ", idents[i], idents[i + 1]);
 			}
 
-			var block = Group(context.stmt(), context.block());
+			var block = Visit(context.scopeBlock());
 
-			return string.Format("{0} {1} {2} {3}({4}) {{ {5} }}",
-				attributes, modifiers, returnType, name, prmString, string.Join("", block.Select(b => Visit(b))));
+			return string.Format("{0} {1} {2} {3}({4}) {5}",
+				attributes, modifiers, returnType, name, prmString, block);
 		}
 
 		public override string VisitGetField(DogeSharpParser.GetFieldContext context)
@@ -212,9 +212,12 @@ namespace DogeSharp
 
 		public override string VisitUsing(DogeSharpParser.UsingContext context)
 		{
-			var resource = Visit(context.Expr);
-			var block = CreateBlock(context.block(), context.stmt());
-			return string.Format("using ({0}) {{ {1} }}", resource, block);
+			return string.Format("using ({0}) {1}", Visit(context.Expr), Visit(context.scopeBlock()));
+		}
+
+		public override string VisitScopeBlock(DogeSharpParser.ScopeBlockContext context)
+		{
+			return string.Format("{{ {0} }}", CreateBlock(context.stmt(), context.block(), context.conditional()));
 		}
 
 		public override string VisitStmt(DogeSharpParser.StmtContext context)
@@ -226,8 +229,25 @@ namespace DogeSharp
 
 		public override string VisitLock(DogeSharpParser.LockContext context)
 		{
-			var block = CreateBlock(context.block(), context.stmt());
+			var block = Visit(context.scopeBlock());
 			return string.Format("lock ({0}) {{ {1} }}", context.ID.Text, block);
+		}
+
+		public override string VisitConditional(DogeSharpParser.ConditionalContext context)
+		{
+			var extras = string.Join(" ", context.conditionalElse().Select(c => Visit(c)));
+			return string.Format("if ({0}) {1} {2}", Visit(context.expr()), Visit(context.scopeBlock()), extras);
+		}
+
+		public override string VisitConditionalElse(DogeSharpParser.ConditionalElseContext context)
+		{
+			var start = "else";
+			if (context.Pre.Text == "but rly")
+			{
+				start += string.Format(" if ({0})", Visit(context.expr()));
+			}
+
+			return string.Format("{0} {1}", start, Visit(context.scopeBlock()));
 		}
 
 		private string CreateBlock(params IEnumerable<ParserRuleContext>[] contexts)

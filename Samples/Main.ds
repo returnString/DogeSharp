@@ -15,11 +15,11 @@ much Program
 		wow x;
 		wow plz x.GetType;
 		such y plz Convert.ToInt32 many x;
-		wow so maths y + 1;
+		wow so op y + 1;
 
 	very Constructors so void much static
 		such rand gimme Random;
-		such z so maths plz rand.Next + plz rand.Next + 1;
+		such z so op plz rand.Next + plz rand.Next + 1;
 		wow z;
 
 		such instance gimme MyType many 1 2;
@@ -29,7 +29,7 @@ much Program
 
 	very Overflow so void much static
 		such max int.MaxValue;
-		such overflow so maths max + 1;
+		such overflow so op max + 1;
 		wow overflow;
 
 	very Input so void much static
@@ -56,6 +56,25 @@ much Program
 			such x 1;
 		}
 
+	very Conditional so void much static
+		such x 0;
+
+		such rand gimme Random;
+		such variable plz rand.Next;
+		
+		rly so op variable <= 10
+		{
+			x so 1;
+		}
+		but rly so op variable <= 1000
+		{
+			x so 2;
+		}
+		but
+		{
+			x so 3;
+		}
+
 	very Main so void much static
 		lockObject so gimme object;
 		plz Basic;
@@ -64,5 +83,6 @@ much Program
 		plz Overflow;
 		plz Input;
 		plz WithResource;
+		plz Conditional;
 		such task plz AsyncFunction;
 		plz task.Wait;
