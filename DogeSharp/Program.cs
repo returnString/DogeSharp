@@ -123,6 +123,8 @@ namespace DogeSharp
 
 						Log("much translation: {0}", actual);
 
+						parser.RemoveErrorListeners();
+						parser.AddErrorListener(new ErrorListener());
 						var visitor = new DogeToCSTranslator(actual);
 						var text = visitor.Visit(parser.prog());
 
@@ -227,6 +229,14 @@ namespace DogeSharp
 				default:
 					throw new CompilerException("many target, much invalid");
 			}
+		}
+	}
+
+	internal class ErrorListener : IAntlrErrorListener<IToken>
+	{
+		public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+		{
+			throw new CompilerException(offendingSymbol, "wow, many syntax error: {0}", msg);
 		}
 	}
 }
