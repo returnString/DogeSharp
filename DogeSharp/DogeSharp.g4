@@ -42,7 +42,7 @@ classProperty:
 	attribute* 'such' Name=Ident 'so' Type=Ident ('much' Modifier)*;
 
 declareClass:
-	attribute* 'much' ID=Ident ('so' Ident)* (classProperty|declareFunction)*;
+	attribute* 'much' ID=Ident ('so' Ident)* Hidden='much hidden'? (classProperty|declareFunction)*;
 
 useNamespace:
 	'many' ID=Ident;
@@ -51,7 +51,7 @@ attribute:
 	'[' 'such' ID=Ident ('many' expr+)? ']';
 
 Modifier:
-	'static'|'public'|'readonly'|'protected'|'override'|'virtual'|'async';
+	'static'|'public'|'readonly'|'protected'|'override'|'virtual'|'async'|'private';
 Operator:
 	'+'|'-'|'*'|'/'|'=='|'!='|'>'|'>='|'<'|'<=';
 Number:

@@ -83,8 +83,9 @@ namespace DogeSharp
 				inheritStr = ": " + inheritStr;
 
 			var attributes = string.Join(" ", context.attribute().Select(a => Visit(a)));
+			var modifier = context.Hidden != null ? "internal" : "public";
 
-			return string.Format("{0} class {1} {2} {{ {3} {4} }}", attributes, context.ID.Text, inheritStr,
+			return string.Format("{0} {1} class {2} {3} {{ {4} {5} }}", attributes, modifier, context.ID.Text, inheritStr,
 				string.Join(Environment.NewLine, props), string.Join(Environment.NewLine, methods));
 		}
 

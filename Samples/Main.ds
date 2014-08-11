@@ -2,7 +2,7 @@
 many System.IO
 many System.Threading.Tasks
 
-much Program
+much Program much hidden
 	very Basic so void much static
 		such x 1;
 		x so 2;
