@@ -1,5 +1,7 @@
 # D# (DogeSharp)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/7qcm1amm8nuwd9k3)](https://ci.appveyor.com/project/returnString/dogesharp)
+
 D# is a programming language for Doge fans.
 
 *Huge disclaimer: I have no idea what I'm doing, and definitely shouldn't write languages.*
@@ -57,6 +59,6 @@ Files with a ds extension are considered D# files. We use the `dsc` command-line
 `git clone https://github.com/returnString/DogeSharp.git`
 
 Windows: Open the solution in VS and build, or use MSBuild from cmd.
-Unix: Not tested yet, will require work for the sample build process.
+Unix: Use build_grammar.sh to generate the necessary ANTLR files from the grammar, then build the project inside Xamarin Studio or use xbuild from a terminal.
 
-The build process first takes DogeSharp.csproj and outputs the `dsc` tool. Then, we invoke `dsc` for the sample projects as specified in build.bat. This way, we can test the entire process from inside VS.
+The build process first takes DogeSharp.csproj and outputs the `dsc` tool. Then, we invoke `dsc` for the sample projects as specified in build.bat/sh. This way, we can test the entire process from inside VS.
